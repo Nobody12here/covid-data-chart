@@ -33,4 +33,4 @@ jobs:
     - name: Build application using yarn
       run: yarn build
     - name: Deploy on surge
-      run: surge ./build covid-chart-app-22.surge.sh --token ${{secrets.SURGE_TOKEN}}
+      run: surge ./dist covid-chart-app-22.surge.sh --token ${{secrets.SURGE_TOKEN}}
