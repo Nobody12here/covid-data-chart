@@ -1,0 +1,36 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+  
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js 13
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+    - run: npm install -g surge
+    - name: Yarn Setup
+      run: npm install -g yarn
+    - name: Install create-react-app react-dom react react-scripts
+      run: npm install -g create-react-app react-dom react react-scripts
+    - name: Add react react-dom to yarn
+      run: yarn add react react-dom
+    - name: Build application using yarn
+      run: yarn build
+    - name: Deploy on surge
+      run: surge ./build covid-chart-app-22.surge.sh --token ${{secrets.SURGE_TOKEN}}
